@@ -1,59 +1,52 @@
-forum_project/
-├── app/                          # Thư mục chính chứa mã nguồn ứng dụng Flask
-│   ├── __init__.py               # Khởi tạo ứng dụng Flask, tích hợp các extensions
+health_forum/
+├── app/                          # Mã nguồn chính của ứng dụng Flask
+│   ├── __init__.py               # Khởi tạo Flask app, cấu hình, extensions, blueprints
 │   ├── models.py                 # Định nghĩa các model cơ sở dữ liệu (User, Post, Comment, ...)
-│   ├── views.py                  # Các route và logic xử lý cho diễn đàn (blueprint main)
+│   ├── views.py                  # Các route và logic xử lý chính của diễn đàn (trang chủ, bài viết, ...)
 │   ├── forms.py                  # Định nghĩa các form (đăng ký, đăng nhập, tạo bài viết, ...)
-│   ├── auth/                     # Blueprint cho authentication (đăng ký, đăng nhập, ...)
+│   ├── auth/                     # Blueprint cho authentication
 │   │   ├── __init__.py
-│   │   ├── views.py
-│   │   ├── forms.py
+│   │   ├── views.py              # Route và logic xử lý đăng ký, đăng nhập, ...
+│   │   ├── forms.py              # Form đăng ký, đăng nhập
 │   │   └── models.py          # (Tùy chọn) Model riêng cho authentication nếu cần
 │   ├── chatbot/                  # Blueprint cho chatbot
 │   │   ├── __init__.py
-│   │   ├── views.py              # API endpoint cho chatbot
-│   │   ├── nlp.py                # Xử lý ngôn ngữ tự nhiên, gọi đến model
-│   │   ├── dialogue.py           # Quản lý hội thoại (nếu có)
-│   │   └── utils.py              # Các hàm tiện ích cho chatbot
-│   ├── static/                   # Các file tĩnh (CSS, JavaScript, hình ảnh)
+│   │   ├── views.py              # API endpoint cho chatbot (nhận/gửi tin nhắn)
+│   │   └── nlp.py                # Load model, xử lý ngôn ngữ tự nhiên, gọi model
+│   ├── static/                   # Các file tĩnh
 │   │   ├── css/
-│   │   │   └── style.css
+│   │   │   └── style.css         # CSS chính (tùy chỉnh Bootstrap)
 │   │   ├── js/
-│   │   │   ├── main.js          # JavaScript chung cho trang
-│   │   │   ├── chatbot.js       # JavaScript riêng cho chatbot (gọi API)
-│   │   │   └── ...
-│   │   └── img/
+│   │   │   ├── main.js           # JavaScript chung cho toàn trang
+│   │   │   └── chatbot.js        # JavaScript riêng cho chatbot (giao tiếp với API)
+│   │   └── img/                  # Hình ảnh
 │   │       └── ...
 │   └── templates/                # Các template HTML
-│       ├── base.html             # Template layout chung
-│       ├── home.html              # Trang chủ
+│       ├── base.html             # Layout chung (header, footer, navigation)
+│       ├── home.html              # Trang chủ (danh sách bài viết)
 │       ├── post_detail.html       # Trang chi tiết bài viết
 │       ├── create_post.html      # Trang tạo bài viết
 │       ├── login.html            # Trang đăng nhập
 │       ├── register.html         # Trang đăng ký
-│       ├── user_profile.html     # Trang hồ sơ người dùng (tùy chọn)
-│       ├── _post.html            # Template con cho hiển thị bài viết (để tái sử dụng)
-│       ├── _comment.html         # Template con cho hiển thị bình luận (để tái sử dụng)
-│       └── ...
-├── migrations/                   # Thư mục chứa các file migration (Flask-Migrate)
-│   ├── versions/
-│   └── ...
-├── tests/                        # Thư mục chứa các bài kiểm thử
+│       ├── _post.html            # (Template con) Hiển thị một bài viết
+│       ├── _comment.html         # (Template con) Hiển thị một bình luận
+│       └── ...                   # Các template khác (tùy chọn)
+├── data/                         # Dữ liệu
+│   └── models/                   # Thư mục chứa file model chatbot
+│       └── chatbot_model.joblib  # File model đã huấn luyện (.joblib, .pkl, ...)
+├── migrations/                # (Tùy chọn) Nếu bạn sử dụng Flask-Migrate
+│    └── versions
+├── tests/                        # Unit tests và integration tests
 │   ├── __init__.py
-│   ├── conftest.py               # Cấu hình pytest (nếu dùng pytest)
+│   ├── conftest.py               # (Tùy chọn) Cấu hình pytest
 │   ├── test_models.py
 │   ├── test_views.py
 │   ├── test_auth.py
 │   ├── test_chatbot.py
 │   └── ...
-├── data/                         # Dữ liệu (đã xử lý)
-│   ├── processed/                # Dữ liệu đã tiền xử lý, sẵn sàng cho chatbot (nếu cần)
-│   │    └── ...
-│   └── models/               # Nơi chứa file mô hình đã train
-│         └── chatbot_model.joblib  # (Hoặc .pkl, .h5, ... tùy định dạng)
-├── venv/                         # Môi trường ảo
-├── config.py                     # Cấu hình ứng dụng
+├── venv/                         # Môi trường ảo (virtual environment)
+├── config.py                     # Cấu hình ứng dụng (các môi trường khác nhau)
 ├── run.py                        # File chạy ứng dụng (development)
-├── requirements.txt              # Các thư viện Python
-├── README.md                     # Mô tả dự án
-└── .gitignore                    # Các file và thư mục không cần đưa vào Git
+├── requirements.txt              # Danh sách các thư viện Python cần thiết
+├── README.md                     # Mô tả dự án, hướng dẫn cài đặt, ...
+└── .gitignore                    # Danh sách các file/thư mục không đưa vào Git
